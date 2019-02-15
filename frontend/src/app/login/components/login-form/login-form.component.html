@@ -1,10 +1,9 @@
 <div class="card">
 <form [formGroup]="form" (ngSubmit)="onLogin(form.value);">
-  <div class="alert alert-danger" *ngIf="fc['password'].errors?.invalidLogin">Email And Password Do not Match</div>
   <div class="form-group">
     <label for="email">Email</label>
     <input id="email" type="text" class="form-control" formControlName="email">
-    <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Please Enter A Username</div>
+    <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Please Enter Your Email</div>
   </div>
   <div class="form-group">
     <label for="password">Password</label>
@@ -19,5 +18,4 @@
   <button class="btn btn-primary"  type="submit">Login</button>
 </form>
 </div>
-
 
