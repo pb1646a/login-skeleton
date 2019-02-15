@@ -1,0 +1,23 @@
+<div class="card">
+<form [formGroup]="form" (ngSubmit)="onLogin(form.value);">
+  <div class="alert alert-danger" *ngIf="fc['password'].errors?.invalidLogin">Email And Password Do not Match</div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" type="text" class="form-control" formControlName="email">
+    <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Please Enter A Username</div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password" type="password" class="form-control" formControlName="password">
+    <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Please Enter A Password</div>
+    <div *ngIf="fc['password'].errors?.cannotContainSpace&&fc['password'].touched" class="text-box alert alert-danger form-control">
+      Not A Valid Password, Please Remove White Spaces
+  </div>
+
+</div>
+
+  <button class="btn btn-primary"  type="submit">Login</button>
+</form>
+</div>
+
+

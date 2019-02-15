@@ -1,0 +1,23 @@
+.card{
+margin: 0% 20%;
+border-style: solid;
+border-color: lightsteelblue;
+border-radius: 0.5px;
+width: 30%;
+box-shadow: 10px 10px 5px lightsteelblue;
+margin-left: 28%;
+}
+.form-control{
+  width: 80%;
+  margin: 0.5rem 0rem 0.5rem 0rem;
+
+}
+.form-group{
+  margin: 1rem 20% 1rem 20%;
+}
+.text-box{
+  width: 80%;
+}
+button{
+  margin: 1rem 30% 1rem 28%;
+}

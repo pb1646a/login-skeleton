@@ -1,0 +1,28 @@
+{
+  "name": "backend-extended",
+  "version": "1.0.0",
+  "description": "/node_modules/backend/server.js",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "backend": "git+https://pb1646a@bitbucket.org/pb1646a/node-backend-js.git#master",
+    "crypto": "^1.0.1",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.11",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "qs": "^6.6.0",
+    "redis": "^2.8.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "dotenv": "^6.2.0",
+    "nodemon": "^1.18.10"
+  }
+}
