@@ -27,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             error.message
           }`;
         }
-        window.alert(errorMessage);
+       // window.alert(errorMessage);
         return throwError(errorMessage);
       })
     );

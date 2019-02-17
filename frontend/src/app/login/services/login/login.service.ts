@@ -1,7 +1,8 @@
+import { catchError } from "rxjs/operators";
 import { map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, of, throwError } from "rxjs";
 import * as jwt_decode from "jwt-decode";
 
 @Injectable({
@@ -9,9 +10,8 @@ import * as jwt_decode from "jwt-decode";
 })
 export class LoginService {
   isLoggedIn;
-  loginStatus: { token:string;expiresAt:any };
+  loginStatus: { token: string; expiresAt: any };
   $$loginStatus = new BehaviorSubject(this.isLoggedIn);
-
 
   constructor(private http: HttpClient) {}
   login(authData) {
@@ -27,35 +27,41 @@ export class LoginService {
             token: token.token,
             expiresAt: token.expiresAt
           };
+        }),catchError(error=>{
+          return throwError(error);
         })
       )
-      .subscribe(transformedData => {
-        this.loginStatus = transformedData;
-        this.$$loginStatus.next(this.loginStatus);
-        this.setToken(this.loginStatus.token, this.loginStatus.expiresAt);
-
-      });
-
+      .subscribe(
+        transformedData => {
+          this.loginStatus = transformedData;
+          this.$$loginStatus.next(true);
+          this.setToken(this.loginStatus.token, this.loginStatus.expiresAt);
+        },
+        error => {
+          this.$$loginStatus.next(false);
+          console.log(error);
+        }
+      );
   }
   setToken(token, expirey) {
     localStorage.setItem("expiresAt", expirey);
     localStorage.setItem("token", token);
   }
   getToken(key) {
-   return localStorage.getItem(key);
-
+    return localStorage.getItem(key);
   }
   removeToken() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiresAt");
-    this.loginStatus = {token:'', expiresAt:''};
+    this.loginStatus = { token: "", expiresAt: "" };
     this.$$loginStatus.next(false);
     return false;
   }
-  checkAuth(loginStatus?) {
+  checkAuth(loginStatus) {
     if (loginStatus.token) {
       if (jwt_decode(loginStatus.token)) {
         const decoded = jwt_decode(loginStatus.token);
+        console.log(decoded)
         const now = Date.now();
         if (now < loginStatus.expiresAt) {
           return true;
@@ -69,16 +75,16 @@ export class LoginService {
       return false;
     }
   }
-  checkStatus(){
-    this.loginStatus = {token:this.getToken('token'),expiresAt:this.getToken('expiresAt')};
-    if(this.checkAuth(this.loginStatus)){
+  checkStatus() {
+    this.loginStatus = {
+      token: this.getToken("token"),
+      expiresAt: this.getToken("expiresAt")
+    };
+    if (this.checkAuth(this.loginStatus)) {
       this.$$loginStatus.next(true);
-    }else{
+    } else {
       this.$$loginStatus.next(false);
     }
-
-
-
   }
 
   returnLoginObservable() {
@@ -88,4 +94,3 @@ export class LoginService {
 
 // check if beh subject syncs with loginStatus
 // get some extra user details
-

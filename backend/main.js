@@ -12,7 +12,7 @@ app.post("/login", function(req, res, next) {
         return next(err);
       }
       if (!user) {
-        return res.json({error:'nope'});
+        return res.status(401).json({message:'User Not Found', tokenData:''});
       }
       if (user) {
         let token = jwt.sign(

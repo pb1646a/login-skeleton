@@ -13,7 +13,7 @@ import { Subscription } from "rxjs";
 export class LoginFormComponent implements OnInit {
   form: FormGroup;
   isLoggedIn;
-  loginStatus={token:'', expiresAt:''};
+  loginStatus = { token: "", expiresAt: "" };
   $loginStatus: Subscription;
   returnUrl: string;
   get fc() {
@@ -29,12 +29,11 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
-    this.loginStatus.token = this.loginService.getToken('token');
-    this.loginStatus.expiresAt = this.loginService.getToken('expiresAt');
+    this.loginStatus.token = this.loginService.getToken("token");
+    this.loginStatus.expiresAt = this.loginService.getToken("expiresAt");
     this.isLoggedIn = this.loginService.checkAuth(this.loginStatus);
-    if(this.isLoggedIn){
+    if (this.isLoggedIn) {
       this.router.navigateByUrl(this.returnUrl);
-
     }
 
     this.form = this.fb.group({
@@ -53,9 +52,9 @@ export class LoginFormComponent implements OnInit {
     this.loginService.login(userAuth);
     this.loginService.returnLoginObservable().subscribe(token => {
       if (token) {
-        if (this.loginService.checkAuth(token)) {
           this.router.navigateByUrl(this.returnUrl);
-        }
+      }else{
+        this.form.get('email').setErrors({invalidEmail: true})
       }
     });
   }

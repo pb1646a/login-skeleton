@@ -21,4 +21,10 @@ export class PasswordValidator {
       }
     };
   }
+  static loginError(emailControlName: string, passwordControlName: string) {
+    return (formGroup: FormGroup) => {
+      const email = formGroup.controls[emailControlName];
+      const password = formGroup.controls[passwordControlName];
+    };
+  }
 }
