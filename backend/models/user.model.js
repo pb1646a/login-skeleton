@@ -8,8 +8,6 @@ let userSchema = new Schema({
     email: String,
     passwordHash: String,
     passwordSalt:String,
-    dob: Date,
-    userRoles:[String]
 
 });
 
