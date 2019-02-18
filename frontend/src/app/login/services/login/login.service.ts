@@ -27,7 +27,9 @@ export class LoginService {
             token: token.token,
             expiresAt: token.expiresAt
           };
-        }),catchError(error=>{
+        }),
+        catchError(error => {
+          console.log(error);
           return throwError(error);
         })
       )
@@ -39,7 +41,7 @@ export class LoginService {
         },
         error => {
           this.$$loginStatus.next(false);
-          console.log(error);
+          return;
         }
       );
   }
@@ -61,7 +63,7 @@ export class LoginService {
     if (loginStatus.token) {
       if (jwt_decode(loginStatus.token)) {
         const decoded = jwt_decode(loginStatus.token);
-        console.log(decoded)
+        console.log(decoded);
         const now = Date.now();
         if (now < loginStatus.expiresAt) {
           return true;
