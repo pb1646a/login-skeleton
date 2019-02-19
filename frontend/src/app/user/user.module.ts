@@ -9,4 +9,4 @@ import { RegistrationFormComponent } from "./registration-form/registration-form
   providers: [],
   declarations: [RegistrationFormComponent]
 })
-export class RegistrationModule {}
+export class UserModule {}

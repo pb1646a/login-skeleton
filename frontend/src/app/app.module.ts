@@ -8,7 +8,7 @@ import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { TopNavComponent } from "./components/top-nav/top-nav.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpErrorInterceptor } from "./login/services/error-interceptor.service";
-import { RegistrationModule } from "./user/user.module";
+import { UserModule } from "./user/user.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import { RegistrationModule } from "./user/user.module";
   imports: [
     BrowserModule,
     LoginModule,
-    RegistrationModule,
+    UserModule,
+
     RoutingModule,
     HttpClientModule
   ],
