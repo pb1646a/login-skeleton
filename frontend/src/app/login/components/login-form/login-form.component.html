@@ -1,5 +1,5 @@
 <div class="card">
-<form [formGroup]="form" (ngSubmit)="onLogin(form.value);">
+<form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value);">
   <div class="form-group">
       <div *ngIf="fc['email'].errors?.invalidEmail" class="text-box alert alert-danger">Invalid Login Info</div>
     <label for="email">Email</label>

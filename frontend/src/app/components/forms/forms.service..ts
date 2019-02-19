@@ -15,7 +15,6 @@ export class FormsService {
   }
   setFields(fieldsArray) {
     fieldsArray.forEach(field => {
-      console.log(field);
       this.form.addControl(
         field.key,
         new FormControl(field.value, Validators.compose(field.validators))

@@ -1,5 +1,6 @@
-import { FormsService } from './../../../components/forms/forms.service.';
-import { FormGroup, Validators } from "@angular/forms";
+import { FormsService } from "./../../components/forms/forms.service.";
+
+import { FormGroup, Validators, FormControl, FormArray } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -15,7 +16,8 @@ export class RegistrationFormComponent implements OnInit {
     { key: "password", value: "", validators: [Validators.required] },
     { key: "confirmpassword", value: "", validators: [Validators.required] }
   ];
-
+  errors;
+  currentControl;
   constructor(private registrationForm: FormsService) {}
   get userForm(): FormGroup {
     return this.registrationForm.form;
@@ -26,14 +28,23 @@ export class RegistrationFormComponent implements OnInit {
 
   ngOnInit() {
     this.registrationForm.setFields(this.formFields);
-
   }
   onRegister(val) {
-    console.log(val);
+    if (!this.registrationForm.form.valid) {
+      const controls: FormControl = this.registrationForm.form.controls;
+      for (const control in controls) {
+        if (control) {
+          this.currentControl = this.registrationForm.form.get(control);
+          if (this.currentControl.invalid) {
+            this.errors = this.currentControl.errors;
+            this.currentControl.setErrors({ required: true });
+            this.currentControl.markAsTouched();
+          }
+        }
+      }
+    }
   }
-
 }
-
 
 /*
 

@@ -5,20 +5,31 @@ import { LoginModule } from "./login/login.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
-import { TopNavComponent } from './components/top-nav/top-nav.component';
+import { TopNavComponent } from "./components/top-nav/top-nav.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpErrorInterceptor } from "./login/services/error-interceptor.service";
-
+import { RegistrationModule } from "./user/user.module";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, TopNavComponent],
-  imports: [BrowserModule, LoginModule, RoutingModule, HttpClientModule],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpErrorInterceptor,
-    multi:true
-  }
-
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NotFoundComponent,
+    TopNavComponent
+  ],
+  imports: [
+    BrowserModule,
+    LoginModule,
+    RegistrationModule,
+    RoutingModule,
+    HttpClientModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

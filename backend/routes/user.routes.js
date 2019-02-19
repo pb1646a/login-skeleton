@@ -10,7 +10,6 @@ router.post('/register_user', (req,res)=>{
     let data = req.body;
     let password = req.body.password;
     let shpass = passwordHash(password);
-    console.log(data);
 
     let user = new User({
         firstname: data.firstname, 
@@ -23,7 +22,7 @@ router.post('/register_user', (req,res)=>{
     })
     user.save().then(user=>{
         if(user){
-            return res.status(200).json({message:'User Created', response: user});
+            return res.status(201).json({message:'User Created', response: user});
         }
     }
         
