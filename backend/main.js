@@ -17,7 +17,7 @@ app.post("/login", (req, res, next)=>{
       }
       if (user) {
         let token = jwt.sign(
-          { userID: user.id,userRoles:user.userRoles },
+          { userID: user.id,firstname: user.firstname, lastname: user.lastname, email: user.email},
           "todo-app-super-shared-secret",
           { expiresIn: "2h"}
         );

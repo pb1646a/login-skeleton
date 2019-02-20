@@ -3,10 +3,12 @@ const router = express.Router();
 const User = require('../models/user.model');
 const Auth = require('../auth/password');
 const passwordHash = Auth.saltHashPassword;
+const multer = require('multer');
+const formData = multer();
 require('../auth/passport-strategy');
 
 
-router.post('/register_user', (req,res)=>{
+router.post('/register_user',formData.none(), (req,res)=>{
     let data = req.body;
     let password = req.body.password;
     let shpass = passwordHash(password);

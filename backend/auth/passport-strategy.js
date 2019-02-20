@@ -22,7 +22,6 @@ passport.use(
             data.firstName = user.firstName;
             data.lastName = user.lastName;
             data.email = user.email;
-            data.userRoles = user.userRoles;
             return done(null, data, { message: "User Exists" });
           }
           if (auth != true) {

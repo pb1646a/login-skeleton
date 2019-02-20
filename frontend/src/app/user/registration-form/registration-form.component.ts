@@ -2,6 +2,9 @@ import { FormsService } from "./../../components/forms/forms.service.";
 
 import { FormGroup, Validators, FormControl, FormArray } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
+import { UserManagmentService } from "../services/user.service";
+import { User } from "src/app/login/models/user.model";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-registration-form",
@@ -18,7 +21,9 @@ export class RegistrationFormComponent implements OnInit {
   ];
   errors;
   currentControl;
-  constructor(private registrationForm: FormsService) {}
+  currentUser: User;
+  $$currentUser: Subscription;
+  constructor(private registrationForm: FormsService, private userService: UserManagmentService) {}
   get userForm(): FormGroup {
     return this.registrationForm.form;
   }
@@ -41,7 +46,18 @@ export class RegistrationFormComponent implements OnInit {
             this.currentControl.markAsTouched();
           }
         }
+      return; 
+    }
+    }else{
+      this.userService.registerUser(val);
+      this.$$currentUser = this.userService.returnCurrentUserAsObservable()
+      .subscribe(user=>{
+        this.currentUser = user;
+        return user;
       }
+      );
+      
+      
     }
   }
 }
