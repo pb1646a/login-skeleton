@@ -8,8 +8,11 @@ import {
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { retry, catchError } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 export class HttpErrorInterceptor implements HttpInterceptor {
+  router: Router;
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -17,18 +20,25 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = "";
+        let err = {
+          status: "",
+          message: ""
+        };
         if (error.error instanceof ErrorEvent) {
           // client-side error
-          errorMessage = `Error: ${error.error.message}`;
+          err.message = `Error: ${error.error.message}`;
         } else {
           // server-side error
-          errorMessage = `Error Code is: ${error.status}\nMessage: ${
-            error.message
-          }`;
+          err.status = error.status.toString();
+          err.message = error.message;
         }
-       // window.alert(errorMessage);
-        return throwError(errorMessage);
+        if (err.status) {
+          if (err.status == "500") {
+            window.alert(error.message);
+          }
+        }
+        // window.alert(errorMessage);
+        return throwError(err);
       })
     );
   }

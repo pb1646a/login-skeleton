@@ -27,10 +27,9 @@ router.post('/register_user',formData.none(), (req,res)=>{
             return res.status(201).json({message:'User Created', response: user});
         }
     }
-        
-     
     ).catch(error=>{
-        console.log(error)
+
+        return res.status(400).json({message: 'Error Occured', response: error});
 
     })
 })

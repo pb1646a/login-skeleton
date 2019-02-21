@@ -1,37 +1,45 @@
 <div class="card">
-    <form [formGroup]="userForm" (ngSubmit)="onRegister(userForm.value);">
-        <div class="form-group">
-            <label for="firstname">Firstname</label>
-            <input id="firstname" type="text" class="form-control" formControlName="firstname">
-            <div class="form-control" *ngIf="fc['firstname'].touched&&fc['firstname'].errors?.required" class="text-box alert alert-danger">Please Enter A Firstname</div>
-          </div>
-          <div class="form-group">
-              <label for="lastname">Lastname</label>
-              <input id="lastname" type="text" class="form-control" formControlName="lastname">
-              <div class="form-control" *ngIf="fc['lastname'].touched&&fc['lastname'].errors?.required" class="text-box alert alert-danger">Please Enter A Lastname</div>
-            </div>
-     <div class="form-group">
-        <label for="email">Email</label>
-        <input id="email" type="text" class="form-control" formControlName="email">
-        <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Please Enter A Email</div>
-      </div>
+  <form [formGroup]="userForm" (ngSubmit)="onRegister(userForm.value);">
+    <div *ngIf="error">
+     <div class="form-group text-box alert alert-danger" [ngSwitch]="error.status">
+       <li *ngSwitchCase='403'>User Already Exists</li>
+       <li *ngSwitchCase='400'>There Was An Error On Your Form</li>
+     </div>
+    </div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" class="form-control" formControlName="password">
-        <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Please Enter A Password</div>
-        <div *ngIf="fc['password'].errors?.cannotContainSpace&&fc['password'].touched" class="text-box alert alert-danger form-control">
-          Not A Valid Password, Please Remove White Spaces
-      </div>
+          <label for="firstname">Firstname</label>
+          <input id="firstname" type="text" class="form-control" formControlName="firstname">
+          <div class="form-control" *ngIf="fc['firstname'].touched&&fc['firstname'].errors?.required" class="text-box alert alert-danger">Firstname Required</div>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input id="lastname" type="text" class="form-control" formControlName="lastname">
+            <div class="form-control" *ngIf="fc['lastname'].touched&&fc['lastname'].errors?.required" class="text-box alert alert-danger">Lastname Required</div>
+          </div>
+   <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="text" class="form-control" formControlName="email">
+      <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Email Required</div>
     </div>
     <div class="form-group">
-        <label for="confirmpassword">Confirm Password</label>
-        <input id="confirmpassword" type="password" class="form-control" formControlName="confirmpassword">
-        <div *ngIf="fc['confirmpassword'].errors?.required&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Please Enter A Password</div>
-        <div *ngIf="fc['confirmpassword'].errors?.cannotContainSpace&&fc['confirmpassword'].touched" class="text-box alert alert-danger form-control">
-          Not A Valid Password, Please Remove White Spaces
-      </div>
+      <label for="password">Password</label>
+      <input id="password" type="password" class="form-control" formControlName="password">
+      <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Password Required</div>
+      <div *ngIf="fc['password'].errors?.cannotContainSpace&&fc['password'].touched" class="text-box alert alert-danger">
+        White Spaces Not Allowed
     </div>
-  
-      <button class="btn btn-primary"  type="submit">Register User</button>
-    </form>
-    </div>
+  </div>
+  <div class="form-group">
+      <label for="confirmpassword">Confirm Password</label>
+      <input id="confirmpassword" type="password" class="form-control" formControlName="confirmpassword">
+      <div *ngIf="fc['confirmpassword'].errors?.required&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Confrim Password</div>
+      <div *ngIf="fc['confirmpassword'].errors?.cannotContainSpace&&fc['confirmpassword'].touched" class="text-box alert alert-danger">White Spaces Not Allowed
+        </div>
+          <div *ngIf="fc['confirmpassword'].errors?.mustMatchGroup&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Passwords Do Not Match
+
+  </div>
+  </div>
+
+    <button class="btn btn-primary"  type="submit">Register User</button>
+  </form>
+  </div>

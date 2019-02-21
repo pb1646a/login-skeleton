@@ -8,6 +8,7 @@ let userSchema = new Schema({
     email: {type: String, required: true},
     passwordHash: {type: String, required: true},
     passwordSalt: {type: String, required: true},
+   test: {type: String, required:true}
 
 });
 
