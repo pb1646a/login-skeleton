@@ -1,4 +1,5 @@
-import { JumbotronComponent } from './components/jumbotron/jumbotron.component';
+import { UserRoutingModule } from './user/user.routing.module';
+
 import { RoutingModule } from "./app.routing.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -16,7 +17,7 @@ import { UserModule } from "./user/user.module";
     AppComponent,
     HomeComponent,
     NotFoundComponent,
-    JumbotronComponent,
+
     TopNavComponent,
 
   ],
@@ -24,7 +25,7 @@ import { UserModule } from "./user/user.module";
     BrowserModule,
     LoginModule,
     UserModule,
-
+    UserRoutingModule,
     RoutingModule,
     HttpClientModule
   ],

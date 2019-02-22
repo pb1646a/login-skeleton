@@ -17,7 +17,7 @@ const genRandomString = length => {
   };
 
 function authenticateUser(user, password) {
-  let passwordCompare = saltHashPassword(password, user.passwordSalt);
+  let passwordCompare = reSaltHashPassword(password, user.passwordSalt);
   if (user.passwordHash === passwordCompare.passwordHash) {
     return true;
   }
@@ -26,6 +26,12 @@ function saltHashPassword(userPassword) {
   let salt = genRandomString(16);
   let passwordData = sha512(userPassword, salt);
   return passwordData;
+}
+function reSaltHashPassword(userPassword,salt){
+  salt = salt;
+ let passwordData = sha512(userPassword, salt);
+ return passwordData;
+
 }
 
 module.exports={

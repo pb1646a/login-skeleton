@@ -1,11 +1,12 @@
 <div class="card">
   <form [formGroup]="userForm" (ngSubmit)="onRegister(userForm.value);">
-    <div *ngIf="error">
-     <div class="form-group text-box alert alert-danger" [ngSwitch]="error.status">
-       <li *ngSwitchCase='403'>User Already Exists</li>
-       <li *ngSwitchCase='400'>There Was An Error On Your Form</li>
-     </div>
-    </div>
+      <div *ngIf="error?.status">
+          <div class="text-box alert alert-danger" [ngSwitch]="error?.status">
+              <li *ngSwitchCase='403'>User Already Exists</li>
+              <li *ngSwitchCase='400'>There Was An Error On Your Form</li>
+            </div>
+        </div>
+    
       <div class="form-group">
           <label for="firstname">Firstname</label>
           <input id="firstname" type="text" class="form-control" formControlName="firstname">
@@ -20,6 +21,7 @@
       <label for="email">Email</label>
       <input id="email" type="text" class="form-control" formControlName="email">
       <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Email Required</div>
+      <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.pattern" class="text-box alert alert-danger">Enter Valid Email Format</div>
     </div>
     <div class="form-group">
       <label for="password">Password</label>

@@ -28,11 +28,12 @@ export class RegistrationFormComponent implements OnInit {
   $$currentUser: Subscription;
   $$error: Subscription;
   error;
+  emailPattern ='(^[a-zA-Z0-9]+)([-_\.])?[a-zA-Z0-9]+(?<!^)(\@{1}(?!$))[a-zA-Z(\.)]+\.+(?!$)[a-zA-Z]+$';
 
   formFields = [
     { key: "firstname", value: "", validators: [Validators.required] },
     { key: "lastname", value: "", validators: [Validators.required] },
-    { key: "email", value: "", validators: [Validators.required] },
+    { key: "email", value: "", validators: [Validators.required, Validators.pattern(this.emailPattern)] },
     {
       key: "password",
       value: "",
@@ -85,14 +86,15 @@ export class RegistrationFormComponent implements OnInit {
           }
         }
       }
-    } else {
+      return;
+    }
       this.userService.registerUser(val);
       this.$$currentUser = this.userService
         .returnCurrentUserAsObservable()
         .subscribe(user => {
           if (user) {
             this.currentUser = user;
-            return user;
+            this.router.navigate([`register/activation/${this.currentUser.email}/${this.currentUser._id}`]);
           }
           if (!user) {
             this.$$error = this.userService
@@ -106,7 +108,6 @@ export class RegistrationFormComponent implements OnInit {
               });
           }
         });
-    }
   }
 }
 

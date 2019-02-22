@@ -12,7 +12,9 @@ passport.use(
     (email, password, done) => {
       return User.findOne({ email: email })
         .then(user => {
+          //console.log(user);
           if (!user) {
+            console.log('not here')
             return done(null, false, { message: "User Does Not Exist" });
           }
           let auth = authUser(user, password);

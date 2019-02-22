@@ -8,11 +8,10 @@ const formData = multer();
 require('../auth/passport-strategy');
 
 
-router.post('/register_user',formData.none(), (req,res)=>{
+router.post('/register_user',formData.none(), (req,res, next)=>{
     let data = req.body;
     let password = req.body.password;
     let shpass = passwordHash(password);
-
     let user = new User({
         firstname: data.firstname, 
         lastname: data.lastname,
@@ -24,15 +23,27 @@ router.post('/register_user',formData.none(), (req,res)=>{
     })
     user.save().then(user=>{
         if(user){
+            console.log(user);
+        
             return res.status(201).json({message:'User Created', response: user});
         }
-    }
-    ).catch(error=>{
+    }).catch(error=>{
+        if(error){
+            if(error.errors.email){
+                if(/unique/.test(error.errors.email.kind)){
+                    return res.status(403).json({message:'Duplicate Email'});
 
+                }        
+            }
+        }
         return res.status(400).json({message: 'Error Occured', response: error});
 
     })
-})
+});
+
+
+
+   
 
 
 

@@ -30,6 +30,7 @@ export class UserManagmentService {
       .pipe(
         map(data => {
           return {
+            _id: data.response._id,
             firstname: data.response.firstname,
             lastname: data.response.lastname,
             email: data.response.email
