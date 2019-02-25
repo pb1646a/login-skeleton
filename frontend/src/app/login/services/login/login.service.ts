@@ -29,7 +29,6 @@ export class LoginService {
           };
         }),
         catchError(error => {
-          console.log(error);
           return throwError(error);
         })
       )

@@ -9,15 +9,15 @@ import { Subscription } from "rxjs";
 
 
 import { FormGroup, Validators, FormControl } from "@angular/forms";
-import { Component, OnInit } from "@angular/core";
-import { User } from 'src/app/login/models/user.model';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { User } from 'src/app/user/models/user.model';
 
 @Component({
   selector: "app-registration-form",
   templateUrl: "./registration-form.component.html",
   styleUrls: ["./registration-form.component.css"]
 })
-export class RegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit, OnDestroy {
   isLoggedIn;
   loginStatus = { token: "", expiresAt: "" };
   $loginStatus: Subscription;
@@ -37,7 +37,7 @@ export class RegistrationFormComponent implements OnInit {
     {
       key: "password",
       value: "",
-      validators: [Validators.required, PasswordValidator.cannotContainSpace]
+      validators: [Validators.required]
     },
     {
       key: "confirmpassword",
@@ -94,7 +94,8 @@ export class RegistrationFormComponent implements OnInit {
         .subscribe(user => {
           if (user) {
             this.currentUser = user;
-            this.router.navigate([`register/activation/${this.currentUser.email}/${this.currentUser._id}`]);
+            
+            this.router.navigateByUrl('/login');
           }
           if (!user) {
             this.$$error = this.userService
@@ -108,6 +109,9 @@ export class RegistrationFormComponent implements OnInit {
               });
           }
         });
+  }
+  ngOnDestroy(){
+    this.registrationForm.form.reset()
   }
 }
 

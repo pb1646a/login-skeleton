@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { User } from "src/app/login/models/user.model";
+import { User } from "src/app/user/models/user.model";
 import { BehaviorSubject, throwError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
@@ -17,6 +17,7 @@ export class UserManagmentService {
   constructor(private http: HttpClient) {}
 
   registerUser(val) {
+    console.log(val)
     const user = new FormData();
     user.append("firstname", val.firstname);
     user.append("lastname", val.lastname);
@@ -33,8 +34,8 @@ export class UserManagmentService {
             _id: data.response._id,
             firstname: data.response.firstname,
             lastname: data.response.lastname,
-            email: data.response.email
-            // will retrieve password at later time
+            email: data.response.email,
+            password: data.response.password
           };
         }),
         catchError(error => {

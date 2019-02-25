@@ -1,53 +1,58 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/user.model');
-const Auth = require('../auth/password');
+const User = require("../models/user.model");
+const Verification = require("../models/verification.model");
+const Auth = require("../auth/password");
 const passwordHash = Auth.saltHashPassword;
-const multer = require('multer');
+const multer = require("multer");
 const formData = multer();
-require('../auth/passport-strategy');
+const qs = require("querystring");
+const crypto = require("crypto");
+require("../auth/passport-strategy");
 
-
-router.post('/register_user',formData.none(), (req,res, next)=>{
-    let data = req.body;
-    let password = req.body.password;
-    let shpass = passwordHash(password);
-    let user = new User({
-        firstname: data.firstname, 
-        lastname: data.lastname,
-        email: data.email,
-        passwordHash: shpass.passwordHash,
-        passwordSalt: shpass.salt
-
-        
+router.post("/register_user", formData.none(), (req, res) => {
+  let data = req.body;
+  let password = req.body.password;
+  let shpass = passwordHash(password);
+  let token = crypto.randomBytes(16).toString("hex");
+  let user = new User({
+    firstname: data.firstname,
+    lastname: data.lastname,
+    email: data.email,
+    passwordHash: shpass.passwordHash,
+    passwordSalt: shpass.salt
+  });
+  user
+    .save()
+    .then(user => {
+      return res.status(201).json({ message: "ok", response: user });
     })
-    user.save().then(user=>{
-        if(user){
-            console.log(user);
-        
-            return res.status(201).json({message:'User Created', response: user});
-        }
-    }).catch(error=>{
-        if(error){
-            if(error.errors.email){
-                if(/unique/.test(error.errors.email.kind)){
-                    return res.status(403).json({message:'Duplicate Email'});
+    .catch(error => {
+      Object.keys(error.errors).filter(err => {
+        if (err.includes("email")) {
+          if (error.errors.email.kind.includes("unique")) {
+            return res
+              .status(409)
+              .json({ message: "email exits", response: error });
+          }
 
-                }        
-            }
+          return res.status(500).json({ mesage: "internal server error" });
         }
-        return res.status(400).json({message: 'Error Occured', response: error});
+      });
+      // console.log(error);
+    });
+  /*
+  let verification = new Verification({
+    userid: user._id,
+    email: user.email,
+    token: token
+  });
+  
+  */
 
-    })
+  //Promise.all([user.save(), verification.save()]).then(x=>console.log(x)).catch(error=>console.log(error));
 });
 
-
-
-   
-
-
-
-
-
+//router.post("/ver", (req, res) => {});
 
 module.exports = router;

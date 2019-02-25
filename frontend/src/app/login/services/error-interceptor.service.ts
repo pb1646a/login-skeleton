@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        let err = {
+        const err = {
           status: "",
           message: ""
         };

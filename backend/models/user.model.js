@@ -16,10 +16,6 @@ let userSchema = new Schema(
       lowercase: true,
       index: true,
       unique: true,
-      validate: function(v) {
-        return emailPattern.test(v);
-      },
-      message: "format"
     },
     passwordHash: { type: String, required: true },
     passwordSalt: { type: String, required: true },
