@@ -15,17 +15,9 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this._loginService.checkStatus();
-    this.$isLoggedIn = this._loginService
-      .returnLoginObservable()
-      .subscribe(status => {
-        if (status) {
-          this.isLoggedIn = true;
-          this.tokenData = this._loginService.loginStatus;
-        } else {
-          this.isLoggedIn = false;
-        }
-      });
+    his.tokenData.token = this._loginService.getToken("token");
+    this.tokenData.expiresAt = this._loginService.getToken("expiresAt");
+    this.isLoggedIn = this._loginService.checkAuth(this.tokenData);
     if (this.isLoggedIn) {
       const cloned = req.clone({
         headers: req.headers.set(
