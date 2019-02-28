@@ -1,44 +1,63 @@
-<div class="card">
-  <form [formGroup]="userForm" (ngSubmit)="onRegister(userForm.value);">
-      <div *ngIf="error?.status">
-          <div class="text-box alert alert-danger" [ngSwitch]="error?.status">
-              <li *ngSwitchCase='409'>User Already Exists</li>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-sm-12 col-xs-12"></div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
+        <div class="card">
+            <form class="form-container"[formGroup]="userForm" (ngSubmit)="onRegister(userForm.value);">
+                
+                  <div class="form-group">
+                      <div *ngIf="error?.status">
+                      <div class="text-box alert alert-danger" [ngSwitch]="error?.status">
+                          <li *ngSwitchCase='409'>User Already Exists</li>
+                        </div>
+                    </div>
+                  </div>
+          
+              <div>
+                <div class="form-group">
+                    <br/><p class="alert alert-danger">User accounts are automatically deleted 24 hours after registration using MongoDB's TTL
+                      </p>
+
+                </div>
+                
+              </div>
+                <div class="form-group">
+                    <label for="firstname">Firstname</label>
+                    <input id="firstname" type="text" class="form-control" formControlName="firstname">
+                    <div  *ngIf="fc['firstname'].touched&&fc['firstname'].errors?.required" class="text-box alert alert-danger">Firstname Required</div>
+                  </div>
+                  <div class="form-group">
+                      <label for="lastname">Lastname</label>
+                      <input id="lastname" type="text" class="form-control" formControlName="lastname">
+                      <div  *ngIf="fc['lastname'].touched&&fc['lastname'].errors?.required" class="text-box alert alert-danger">Lastname Required</div>
+                    </div>
+             <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="text" class="form-control" formControlName="email">
+                <div  *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Email Required</div>
+                <div  *ngIf="fc['email'].touched&&fc['email'].errors?.pattern" class="text-box alert alert-danger">Enter Valid Email Format</div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" class="form-control" formControlName="password">
+                <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Password Required</div>
+              
             </div>
-        </div>
-    
-      <div class="form-group">
-          <label for="firstname">Firstname</label>
-          <input id="firstname" type="text" class="form-control" formControlName="firstname">
-          <div class="form-control" *ngIf="fc['firstname'].touched&&fc['firstname'].errors?.required" class="text-box alert alert-danger">Firstname Required</div>
-        </div>
-        <div class="form-group">
-            <label for="lastname">Lastname</label>
-            <input id="lastname" type="text" class="form-control" formControlName="lastname">
-            <div class="form-control" *ngIf="fc['lastname'].touched&&fc['lastname'].errors?.required" class="text-box alert alert-danger">Lastname Required</div>
-          </div>
-   <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" type="text" class="form-control" formControlName="email">
-      <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Email Required</div>
-      <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.pattern" class="text-box alert alert-danger">Enter Valid Email Format</div>
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input id="password" type="password" class="form-control" formControlName="password">
-      <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Password Required</div>
-    
+            <div class="form-group">
+                <label for="confirmpassword">Confirm Password</label>
+                <input id="confirmpassword" type="password" class="form-control" formControlName="confirmpassword">
+                <div *ngIf="fc['confirmpassword'].errors?.required&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Confrim Password</div>
+                <div *ngIf="fc['confirmpassword'].errors?.cannotContainSpace&&fc['confirmpassword'].touched" class="text-box alert alert-danger">White Spaces Not Allowed
+                  </div>
+                    <div *ngIf="fc['confirmpassword'].errors?.mustMatchGroup&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Passwords Do Not Match
+          
+            </div>
+            </div>
+          
+              <button class="btn btn-primary"  type="submit">Register User</button>
+            </form>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12"></div>
   </div>
-  <div class="form-group">
-      <label for="confirmpassword">Confirm Password</label>
-      <input id="confirmpassword" type="password" class="form-control" formControlName="confirmpassword">
-      <div *ngIf="fc['confirmpassword'].errors?.required&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Confrim Password</div>
-      <div *ngIf="fc['confirmpassword'].errors?.cannotContainSpace&&fc['confirmpassword'].touched" class="text-box alert alert-danger">White Spaces Not Allowed
-        </div>
-          <div *ngIf="fc['confirmpassword'].errors?.mustMatchGroup&&fc['confirmpassword'].touched" class="text-box alert alert-danger">Passwords Do Not Match
+</div>
 
-  </div>
-  </div>
-
-    <button class="btn btn-primary"  type="submit">Register User</button>
-  </form>
-  </div>

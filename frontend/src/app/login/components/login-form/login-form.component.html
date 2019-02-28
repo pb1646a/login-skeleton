@@ -1,21 +1,25 @@
-<div class="card">
-<form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value);">
-  <div class="form-group">
-      <div *ngIf="fc['email'].errors?.invalidEmail" class="text-box alert alert-danger">Invalid Login Info</div>
-    <label for="email">Email</label>
-    <input id="email" type="text" class="form-control" formControlName="email">
-  
-    <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Please Enter Your Email</div>
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input id="password" type="password" class="form-control" formControlName="password">
-    <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Please Enter A Password</div>
-    <div *ngIf="fc['password'].errors?.cannotContainSpace&&fc['password'].touched" class="text-box alert alert-danger form-control">
-      Not A Valid Password, Please Remove White Spaces
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-sm-12 col-xs-12"></div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
+        <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value);"> 
+            <div class="form-group">
+                <div *ngIf="fc['email'].errors?.invalidEmail" class="text-box alert alert-danger">Invalid Login Info</div>
+              <label for="email">Email</label>
+              <input id="email" type="text" class="form-control" formControlName="email">
+              <div class="form-control" *ngIf="fc['email'].touched&&fc['email'].errors?.required" class="text-box alert alert-danger">Please Enter Your Email</div>
+            </div>
+       <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" class="form-control" formControlName="password">
+                    <div *ngIf="fc['password'].errors?.required&&fc['password'].touched" class="text-box alert alert-danger">Please Enter A Password</div>
+                    <div *ngIf="fc['password'].errors?.cannotContainSpace&&fc['password'].touched" class="text-box alert alert-danger form-control">
+                      Not A Valid Password, Please Remove White Spaces
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-block"  type="submit">Login</button>
+      </form>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12"></div>
   </div>
 </div>
-  <button class="btn btn-primary"  type="submit">Login</button>
-</form>
-</div>
-

@@ -1,7 +1,14 @@
-li{
-  display: flex;
-  flex-direction: horizontal;
-  align-items: flex-start;
-  margin-left: 3rem;
+/*Strip the ul of padding and list styling*/
+ul {
+  list-style-type:none;
+  margin:0;
+  padding:1.5rem 0rem 1.5rem 0rem;
+  position: absolute;
+  margin-left:5rem;
 }
-
+/*Create a horizontal list with spacing*/
+li {
+  display:inline-block;
+  float: left;
+  margin-right: 1.5rem;
+}
