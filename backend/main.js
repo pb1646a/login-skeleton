@@ -4,7 +4,7 @@ const app = require('backend/app');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const userRoutes = require('./routes/user.routes');
-
+require('backend/db');
 
 app.use(passport.initialize());
 app.post("/login", (req, res, next)=>{

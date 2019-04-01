@@ -1,4 +1,3 @@
-import { RegistrationFormComponent } from './user/registration-form/registration-form.component';
 import { LoginFormComponent } from "./login/components/login-form/login-form.component";
 import { HomeComponent } from "./components/home/home.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
@@ -13,7 +12,7 @@ const routes: Routes = [
     path: "login",
     component: LoginFormComponent
   },
-  { path: "register", component: RegistrationFormComponent },
+  
   { path: "**", component: NotFoundComponent }
 ];
 

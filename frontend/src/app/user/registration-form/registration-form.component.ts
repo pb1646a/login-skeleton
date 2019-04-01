@@ -28,8 +28,9 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
   $$currentUser: Subscription;
   $$error: Subscription;
   error;
-  emailPattern ='(^[a-zA-Z0-9]+)([-_\.])?[a-zA-Z0-9]+(?<!^)(\@{1}(?!$))[a-zA-Z(\.)]+\.+(?!$)[a-zA-Z]+$';
-
+  emailPattern = new RegExp(
+    "(^[a-zA-Z0-9]+)([-_.])?[a-zA-Z0-9]+(@{1}(?!$))[a-zA-Z(.)]+.+(?!$)[a-zA-Z]+$"
+  );
   formFields = [
     { key: "firstname", value: "", validators: [Validators.required] },
     { key: "lastname", value: "", validators: [Validators.required] },

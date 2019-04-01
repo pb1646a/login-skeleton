@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user.model");
-const Verification = require("../models/verification.model");
 const Auth = require("../auth/password");
 const passwordHash = Auth.saltHashPassword;
 const multer = require("multer");
 const formData = multer();
-const qs = require("querystring");
+
 const crypto = require("crypto");
 require("../auth/passport-strategy");
 
@@ -39,20 +38,10 @@ router.post("/register_user", formData.none(), (req, res) => {
           return res.status(500).json({ mesage: "internal server error" });
         }
       });
-      // console.log(error);
+ 
     });
-  /*
-  let verification = new Verification({
-    userid: user._id,
-    email: user.email,
-    token: token
-  });
-  
-  */
-
-  //Promise.all([user.save(), verification.save()]).then(x=>console.log(x)).catch(error=>console.log(error));
 });
 
-//router.post("/ver", (req, res) => {});
+
 
 module.exports = router;
