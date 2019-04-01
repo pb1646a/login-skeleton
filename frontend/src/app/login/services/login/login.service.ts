@@ -4,20 +4,23 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, of, throwError } from "rxjs";
 import * as jwt_decode from "jwt-decode";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class LoginService {
+  baseUrl = environment.backendUrl;
   isLoggedIn;
   loginStatus: { token: string; expiresAt: any };
   $$loginStatus = new BehaviorSubject(this.isLoggedIn);
+
 
   constructor(private http: HttpClient) {}
   login(authData) {
     return this.http
       .post<{ message: string; tokenData: any }>(
-        `http://localhost:3000/login`,
+        `${this.baseUrl}/api/users/login`,
         authData
       )
       .pipe(

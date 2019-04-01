@@ -1,4 +1,5 @@
-import { JumbotronComponent } from './../components/jumbotron/jumbotron.component';
+import { CommonComponentsModule } from './../common-components/common-components.module';
+
 import { ActivationComponent } from './activation/activation.component';
 
 import { FormsModule } from "@angular/forms";
@@ -10,9 +11,9 @@ import { LoginModule } from '../login/login.module';
 
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, LoginModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, CommonComponentsModule, LoginModule],
   providers: [],
-  declarations: [RegistrationFormComponent, ActivationComponent, JumbotronComponent],
-  exports:[JumbotronComponent]
+  declarations: [RegistrationFormComponent, ActivationComponent],
+  exports:[]
 })
 export class UserModule {}

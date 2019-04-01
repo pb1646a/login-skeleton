@@ -1,4 +1,4 @@
-import { AuthInterceptor } from './services/guards/auth.interceptor';
+import { AuthInterceptor } from './../common-components/guards/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginFormComponent } from "./components/login-form/login-form.component";
 import { CommonModule } from "@angular/common";

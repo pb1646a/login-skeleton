@@ -3,10 +3,11 @@ import { User } from "src/app/user/models/user.model";
 import { BehaviorSubject, throwError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class UserManagmentService {
-  baseUrl = "http://localhost:3000";
+  baseUrl = environment.backendUrl;
   // users: User[]=[];
   currentUser: User;
   //  $$users = new BehaviorSubject(this.users);
@@ -17,7 +18,6 @@ export class UserManagmentService {
   constructor(private http: HttpClient) {}
 
   registerUser(val) {
-    console.log(val)
     const user = new FormData();
     user.append("firstname", val.firstname);
     user.append("lastname", val.lastname);

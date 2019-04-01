@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    his.tokenData.token = this._loginService.getToken("token");
+    this.tokenData.token = this._loginService.getToken("token");
     this.tokenData.expiresAt = this._loginService.getToken("expiresAt");
     this.isLoggedIn = this._loginService.checkAuth(this.tokenData);
     if (this.isLoggedIn) {

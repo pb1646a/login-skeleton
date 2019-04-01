@@ -1,4 +1,4 @@
-import { LoginService } from "../login/login.service";
+import { LoginService } from 'src/app/login/services/login/login.service';
 import { Injectable } from "@angular/core";
 import {
   CanActivate,

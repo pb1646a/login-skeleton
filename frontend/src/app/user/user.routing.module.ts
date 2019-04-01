@@ -5,7 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 
 const routes: Routes = [
-  { { path: "register", component: RegistrationFormComponent }}
+ { path: "register", component: RegistrationFormComponent }
 ];
 
 @NgModule({

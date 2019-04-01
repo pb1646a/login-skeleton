@@ -1,6 +1,5 @@
-import { FormsService } from './../../../components/forms/forms.service.';
+import { FormsService } from './../../../common-components/forms/forms.service.';
 import { LoginService } from "./../../services/login/login.service";
-import { PasswordValidator } from "../../validators/password-validators";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -12,7 +11,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./login-form.component.css"]
 })
 export class LoginFormComponent implements OnInit {
-  form: FormGroup;
+  loginForm: FormGroup;
   isLoggedIn;
   loginStatus = { token: "", expiresAt: "" };
   $loginStatus: Subscription;
@@ -29,15 +28,17 @@ export class LoginFormComponent implements OnInit {
     private route: ActivatedRoute,
     private loginFormService: FormsService
   ) {}
-  get loginForm(): FormGroup {
-    return this.loginFormService.form;
-  }
+
   get fc() {
-    return this.loginFormService.form.controls;
+    return this.loginForm.controls;
+  }
+  getForm(formName){
+    return this.loginFormService.createForm(formName);
   }
 
 
   ngOnInit() {
+    this.loginForm = this.getForm('loginForm');
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
     this.loginStatus.token = this.loginService.getToken("token");
     this.loginStatus.expiresAt = this.loginService.getToken("expiresAt");
@@ -46,7 +47,7 @@ export class LoginFormComponent implements OnInit {
       this.router.navigateByUrl(this.returnUrl);
     }
 
-  this.loginFormService.setFields(this.formFields);
+  this.loginFormService.setFields(this.formFields, this.loginForm);
   }
 
   onLogin(userAuth) {
@@ -55,7 +56,7 @@ export class LoginFormComponent implements OnInit {
       if (token) {
         this.router.navigateByUrl(this.returnUrl);
       } else {
-        this.loginFormService.form.get("email").setErrors({ invalidEmail: true });
+        this.loginForm.get("email").setErrors({ invalidEmail: true });
       }
     });
   }

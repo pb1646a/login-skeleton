@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4 col-sm-12 col-xs-12"></div>
-    <div class="col-md-4 col-sm-12 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="card">
-            <form class="form-container"[formGroup]="userForm" (ngSubmit)="onRegister(userForm.value);">
+            <form class="form-container"[formGroup]="registrationForm" (ngSubmit)="onRegister(registrationForm.value);">
                 
                   <div class="form-group">
                       <div *ngIf="error?.status">
@@ -57,7 +57,7 @@
               <button class="btn btn-primary"  type="submit">Register User</button>
             </form>
       </div>
-      <div class="col-md-4 col-sm-12 col-xs-12"></div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
   </div>
 </div>
 

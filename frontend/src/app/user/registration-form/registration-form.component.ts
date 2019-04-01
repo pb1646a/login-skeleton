@@ -1,16 +1,15 @@
-import { UserManagmentService } from './../services/user.service';
-import { FormsService } from './../../components/forms/forms.service.';
-import { LoginService } from 'src/app/login/services/login/login.service';
-import { PasswordValidator } from './../../login/validators/password-validators';
+import { FormsService } from "./../../common-components/forms/forms.service.";
+import { UserManagmentService } from "./../services/user.service";
+import { LoginService } from "src/app/login/services/login/login.service";
+import { PasswordValidator } from "./../../login/validators/password-validators";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 
 import { Subscription } from "rxjs";
 
-
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { User } from 'src/app/user/models/user.model';
+import { User } from "src/app/user/models/user.model";
 
 @Component({
   selector: "app-registration-form",
@@ -28,13 +27,18 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
   $$currentUser: Subscription;
   $$error: Subscription;
   error;
+  registrationForm: FormGroup;
   emailPattern = new RegExp(
     "(^[a-zA-Z0-9]+)([-_.])?[a-zA-Z0-9]+(@{1}(?!$))[a-zA-Z(.)]+.+(?!$)[a-zA-Z]+$"
   );
   formFields = [
     { key: "firstname", value: "", validators: [Validators.required] },
     { key: "lastname", value: "", validators: [Validators.required] },
-    { key: "email", value: "", validators: [Validators.required, Validators.pattern(this.emailPattern)] },
+    {
+      key: "email",
+      value: "",
+      validators: [Validators.required, Validators.pattern(this.emailPattern)]
+    },
     {
       key: "password",
       value: "",
@@ -48,20 +52,21 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private registrationForm: FormsService,
+    private formsService: FormsService,
     private loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserManagmentService
   ) {}
-  get userForm(): FormGroup {
-    return this.registrationForm.form;
+  getForm(name) {
+    return this.formsService.createForm(name);
   }
   get fc() {
-    return this.registrationForm.form.controls;
+    return this.registrationForm.controls;
   }
 
   ngOnInit() {
+    this.registrationForm = this.getForm("registrationForm");
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
     this.loginStatus.token = this.loginService.getToken("token");
     this.loginStatus.expiresAt = this.loginService.getToken("expiresAt");
@@ -69,17 +74,18 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
     if (this.isLoggedIn) {
       this.router.navigateByUrl(this.returnUrl);
     }
-    this.registrationForm.setFields(this.formFields);
-    this.registrationForm.form.setValidators(
-      PasswordValidator.mustMatchGroup("password", "confirmpassword")
+    this.formsService.setFields(this.formFields, this.registrationForm);
+    this.formsService.addFormValidators(
+      [PasswordValidator.mustMatchGroup("password", "confirmpassword")],
+      this.registrationForm
     );
   }
   onRegister(val) {
-    if (!this.registrationForm.form.valid) {
-      const controls: FormControl = this.registrationForm.form.controls;
+    if (!this.registrationForm.valid) {
+      const controls = this.registrationForm.controls;
       for (const control in controls) {
         if (control) {
-          this.currentControl = this.registrationForm.form.get(control);
+          this.currentControl = this.registrationForm.get(control);
           if (this.currentControl.invalid) {
             this.errors = this.currentControl.errors;
             this.currentControl.setErrors({ required: true });
@@ -89,30 +95,30 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
       }
       return;
     }
-      this.userService.registerUser(val);
-      this.$$currentUser = this.userService
-        .returnCurrentUserAsObservable()
-        .subscribe(user => {
-          if (user) {
-            this.currentUser = user;
-            
-            this.router.navigateByUrl('/login');
-          }
-          if (!user) {
-            this.$$error = this.userService
-              .returnErrorAsObservable()
-              .subscribe(error => {
-                this.error = error;
-                if(this.error.status&&this.error.status==="404"){
-                 return this.router.navigate(['PageNotFound']);
-                }
-                return error;
-              });
-          }
-        });
+    this.userService.registerUser(val);
+    this.$$currentUser = this.userService
+      .returnCurrentUserAsObservable()
+      .subscribe(user => {
+        if (user) {
+          this.currentUser = user;
+
+          this.router.navigateByUrl("/login");
+        }
+        if (!user) {
+          this.$$error = this.userService
+            .returnErrorAsObservable()
+            .subscribe(error => {
+              this.error = error;
+              if (this.error.status && this.error.status === "404") {
+                return this.router.navigate(["PageNotFound"]);
+              }
+              return error;
+            });
+        }
+      });
   }
-  ngOnDestroy(){
-    this.registrationForm.form.reset()
+  ngOnDestroy() {
+    this.registrationForm.reset();
   }
 }
 
