@@ -1,19 +1,43 @@
+require("../auth/passport-strategy");
 const express = require("express");
-const router = express.Router();
 const User = require("../models/user.model");
 const Auth = require("../auth/password");
-const passwordHash = Auth.saltHashPassword;
 const multer = require("multer");
 const formData = multer();
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
-const crypto = require("crypto");
-require("../auth/passport-strategy");
+const router = express.Router();
+const passwordHash = Auth.saltHashPassword;
+
+
+router.post("/login", (req, res, next)=>{
+  passport.authenticate("local", { session: false }, (err, user, info)=>{
+if (err) {
+  return next(err);
+}
+if (!user) {
+  return res.status(401).json({message:'unauthorized',tokenData:''});
+}
+if (user) {
+  let token = jwt.sign(
+    { userID: user.id,firstname: user.firstname, lastname: user.lastname, email: user.email},
+    "todo-app-super-shared-secret",
+    { expiresIn: "2h"}
+  );
+  let expiresAt = Date.now()+(120*36000);
+  return res.status(200).json({ message: "OK", tokenData: JSON.stringify({token:token,expiresAt: expiresAt})});
+}
+})(req, res, next);
+});
+
+
 
 router.post("/register_user", formData.none(), (req, res) => {
+
   let data = req.body;
   let password = req.body.password;
   let shpass = passwordHash(password);
-  let token = crypto.randomBytes(16).toString("hex");
   let user = new User({
     firstname: data.firstname,
     lastname: data.lastname,
