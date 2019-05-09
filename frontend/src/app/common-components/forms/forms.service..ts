@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
   providedIn: "root"
 })
 export class FormsService {
+
   form;
   fields: FormArray;
   formArray;
@@ -38,14 +39,13 @@ export class FormsService {
     formName.removeControl(control);
     formName.updateValueAndValidity();
   }
-  addDynamicFields(array) {
-    this.form.addControl("items", new FormArray([]));
-    this.fields = this.form.get("items") as FormArray;
+  addDynamicFields(array, type, form) {
+    form.addControl(type, new FormArray([]));
+    this.fields = form.get(type) as FormArray;
     this.fields.push(this.createDynamicFields(array));
   }
   addFormValidators(validators, form) {
-let val = Validators.compose(validators);
+    let val = Validators.compose(validators);
     form.setValidators(val);
-
   }
 }
