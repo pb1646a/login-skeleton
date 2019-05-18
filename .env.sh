@@ -1,1 +1,0 @@
-export DB_URI=mongodb+srv://paxwin_user:test@test-apps-lqnpe.mongodb.net/driver?retryWrites=true
