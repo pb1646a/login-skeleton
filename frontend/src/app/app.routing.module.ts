@@ -1,13 +1,11 @@
-import { NotFoundComponent } from './common-components/not-found/not-found.component';
-import { HomeComponent } from './common-components/home/home.component';
-import { LoginFormComponent } from "./login/components/login-form/login-form.component";
-
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { NotFoundComponent } from "./common-components/not-found/not-found.component";
 
 
 const routes: Routes = [
+  { path: "**", component: NotFoundComponent }
 
 ];
 

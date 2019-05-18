@@ -1,26 +1,13 @@
 
-<div class="container-fluid">
-  <div class="row">
-    
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <nav class="navbar">
-         <a href=" https://bitbucket.org/pb1646a/git-search-pb1646a/src/master/" class="navbar-brand">
-            <i class="fab fa-bitbucket"></i>
-          </a>
-          <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item" [ngSwitch]="isLoggedIn">
-                <a class="nav-link" *ngSwitchCase="true" (click)="onLogout()">Logout</a>
-                <a class="nav-link" *ngSwitchCase="false" routerLink="login">Login</a>
-              </li>
-              <li class="nav-item" *ngIf="!isLoggedIn">
-                <a class="nav-link" routerLink="register">Register</a>
-              </li>
-          </ul>   
-        </nav>  
-    </div>
-  </div>
-</div>
-
+<mat-toolbar color='primary'>
+    <button mat-button routerLink="">Home</button>
+    <button mat-button *ngIf="!isLoggedIn" routerLink="login">Login</button>
+    <button mat-button *ngIf="isLoggedIn" (click)="onLogout()">Logout</button>
+    <button mat-button [matMenuTriggerFor]="invoiceMenu">Invoices</button>
+    <mat-menu  #invoiceMenu="matMenu">
+      <button  mat-menu-item>Manage</button>
+      <button mat-menu-item>Invoices</button>
+      <button mat-menu-item>User</button>
+    </mat-menu>
+    <button mat-button *ngIf="!isLoggedIn" routerLink="register">Register</button>
+</mat-toolbar>

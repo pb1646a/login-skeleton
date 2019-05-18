@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  backendUrl: `http://localhost:3000`
+  backendUrl: `http://localhost:3000`,
+  stripePk:  'pk_test_YMCCD22bkZb8EY9tXP58iR0D',
+  braintreePk: "sandbox_38pkp587_ntrdd8grdq2y6qwt"
 };
 
 /*

@@ -20,7 +20,7 @@ export class LoginService {
   login(authData) {
     return this.http
       .post<{ message: string; tokenData: any }>(
-        `${this.baseUrl}/api/users/login`,
+        `${this.baseUrl}/api/shared/users/login`,
         authData
       )
       .pipe(

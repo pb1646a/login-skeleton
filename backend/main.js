@@ -1,12 +1,14 @@
 require('backend/server');
-require("./auth/passport-strategy"); //maybe don't need this here;
+require("./shared/controllers/auth/passport-strategy"); 
 require('backend/db');
 const app = require('backend/app');
 const passport = require('passport');
-const userRoutes = require('./routes/user.routes');
+const userRoutes = require('./user/routes/user.routes');
+const adminRoutes = require('./admin/routes/admin.routes');
+const sharedRoutes = require('./shared/routes/shared.routes');
 
 
 app.use(passport.initialize());
-
-
-  app.use('/api/users', userRoutes);
+  app.use('/api/shared', sharedRoutes);
+  app.use('/api/user', userRoutes);
+  app.use('/api/admin', adminRoutes);

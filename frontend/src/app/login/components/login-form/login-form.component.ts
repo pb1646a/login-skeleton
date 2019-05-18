@@ -4,6 +4,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
+import { FormFields } from 'src/app/common-components/forms/models/forms.model';
+import { LoginStatus } from '../../models/login.models';
 
 @Component({
   selector: "app-login-form",
@@ -13,10 +15,10 @@ import { Subscription } from "rxjs";
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   isLoggedIn;
-  loginStatus = { token: "", expiresAt: "" };
+  loginStatus:LoginStatus = { token: "", expiresAt: "" };
   $loginStatus: Subscription;
   returnUrl: string;
-  formFields = [
+  formFields: FormFields[] = [
     { key: "email", value: "", validators: [Validators.required] },
     { key: "password", value: "", validators: [Validators.required] }
   ];

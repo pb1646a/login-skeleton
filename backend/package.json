@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "backend": "git+https://pb1646a@bitbucket.org/pb1646a/node-backend-js.git#master",
+    "aws-sdk": "^2.456.0",
+    "backend": "pb1646a/node-backend#master",
     "crypto": "^1.0.1",
     "form-data": "^2.3.3",
     "jsonwebtoken": "^8.5.1",
@@ -25,7 +26,8 @@
     "querystring": "^0.2.0",
     "redis": "^2.8.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "dotenv": "^8.0.0",

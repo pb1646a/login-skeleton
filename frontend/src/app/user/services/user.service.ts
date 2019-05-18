@@ -25,7 +25,7 @@ export class UserManagmentService {
     user.append("password", val.password);
     return this.http
       .post<{ message: string; response: User }>(
-        `${this.baseUrl}/api/users/register_user`,
+        `${this.baseUrl}/api/shared/users/register_user`,
         user
       )
       .pipe(

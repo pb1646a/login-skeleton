@@ -6,7 +6,6 @@ import { Injectable } from "@angular/core";
   providedIn: "root"
 })
 export class FormsService {
-
   form;
   fields: FormArray;
   formArray;
@@ -17,11 +16,11 @@ export class FormsService {
   createForm(name): FormGroup {
     return (name = this.fb.group({}));
   }
-  setFields(fieldsArray, formName) {
+  setFields(fieldsArray, formName: FormGroup) {
     fieldsArray.forEach(field => {
       formName.addControl(
         field.key,
-        new FormControl(field.value, Validators.compose(field.validators))
+        new FormControl(field.value, Validators.compose(field.validators) )
       );
     });
   }
@@ -35,9 +34,17 @@ export class FormsService {
     });
     return this.formArray;
   }
-  removeFields(control, formName) {
-    formName.removeControl(control);
-    formName.updateValueAndValidity();
+  removeFields(fields, formName) {
+    fields.forEach(cont => {
+      formName.removeControl(cont.key);
+      formName.updateValueAndValidity();
+    });
+  }
+
+  removeDynamiCFields(index, type, form) {
+    this.fields = form.get(type) as FormArray;
+    this.fields.removeAt(index);
+
   }
   addDynamicFields(array, type, form) {
     form.addControl(type, new FormArray([]));
